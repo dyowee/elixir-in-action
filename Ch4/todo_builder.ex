@@ -47,3 +47,18 @@ defmodule TodoList do
     	   end)
     end
 end
+
+defimpl Collectable, for: TodoList do
+    
+    def into(original) do
+        {original, fn(todo_list, result) -> into_callback(todo_list, result) end}
+    end
+
+    defp into_callback(todo_list, {:cont, entry}) do
+        TodoList.add_entry(todo_list, entry)
+    end
+
+    defp into_callback(todo_list, :done), do: todo_list
+    defp into_callback(_, :halt), do: :ok
+
+end
