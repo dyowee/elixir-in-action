@@ -42,21 +42,23 @@ defmodule ServerProcess do
 end
 
 defmodule KeyValueStore do
-	def init do
-		HashDict.new
+	use GenServer
+
+	def init(_) do
+		{:ok, HashDict.new}
 	end
         
 	def handle_cast({:put, key, value}, state) do
-		HashDict.put(state, key, value)
+		{:noreply, HashDict.put(state, key, value)}
 	end
 
-	def handle_call({:get, key}, state) do
-		{HashDict.get(state, key), state}
+	def handle_call({:get, key}, _, state) do
+		{:reply, HashDict.get(state, key), state}
 	end
 
-	def start, do: ServerProcess.start(KeyValueStore)	    
+	def start, do: GenServer.start(KeyValueStore, nil)	    
     
-    def get(pid, key), do: ServerProcess.call(pid, {:get, key})
+    def get(pid, key), do: GenServer.call(pid, {:get, key})
     
-    def put(pid, key, value), do: ServerProcess.cast(pid, {:put, key, value})
+    def put(pid, key, value), do: GenServer.cast(pid, {:put, key, value})
 end
