@@ -1,0 +1,12 @@
+{application,todo,
+             [{registered,[]},
+              {description,"todo"},
+              {applications,[kernel,stdlib,elixir,runtime_tools,gproc,cowboy,
+                             plug]},
+              {mod,{'Elixir.Todo.Application',[]}},
+              {vsn,"0.0.1"},
+              {modules,['Elixir.Todo.Application','Elixir.Todo.Cache',
+                        'Elixir.Todo.Database','Elixir.Todo.DatabaseWorker',
+                        'Elixir.Todo.List','Elixir.Todo.PoolSupervisor',
+                        'Elixir.Todo.Server','Elixir.Todo.ServerSupervisor',
+                        'Elixir.Todo.Supervisor','Elixir.Todo.Web']}]}.
